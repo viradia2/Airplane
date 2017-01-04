@@ -82,11 +82,17 @@ public class UserServlet extends HttpServlet {
 		if(submit.equalsIgnoreCase("Create Username")){
 			String username1 = request.getParameter("username1");
 			System.out.println(username1);
-			User us = new User();
-			us.setUsername1(username1);
 			try {
-				um.addUsername(us);
-				response.sendRedirect("index.jsp");
+				um.addUsername(username1);
+				System.out.println(username1);
+//				String user = um.findUsername(username1);
+				String uName = um.getUName(username1);
+				request.setAttribute("username", uName);
+				List<String> list1 = um.dropdown();
+				request.setAttribute("city", list1);
+//				boolean done = username1.equals(user);
+//				if(done == true)
+					request.getRequestDispatcher("index.jsp").forward(request, response);
 			} catch (ClassNotFoundException | SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

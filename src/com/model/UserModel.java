@@ -4,8 +4,12 @@ import java.sql.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.omg.CORBA.Request;
+
 import com.bean.User;
 import com.db.DBConnection;
+import com.servlet.*;
 
 public class UserModel {
 
@@ -91,13 +95,15 @@ public class UserModel {
 		 return username1;
 	}
 	
-	public void addUsername(User us) throws ClassNotFoundException, SQLException {
+	public void addUsername(String username1) throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
 		Connection con = DBConnection.getConnection();
 		Statement stmt = con.createStatement();
-		String sql = "insert into username(username) values('"+us.getUsername1()+"') ";
+		String sql = "insert into UserName(username) values('"+username1+"') ";
+		System.out.println(sql);
 		stmt.executeUpdate(sql);
 	}
+	
 	public String getUName(String username) throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
 		 Connection con=DBConnection.getConnection();
