@@ -17,17 +17,21 @@
 	}
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>
+	Insert title here
+</title>
 </head>
 <body>
-<form action="UserServlet" method="get">
-<div class="block">
-	<input type="text" name="username" placeholder="Enter Username" />
-	<input type="submit" name="submit" value="Book Reservation" /><br>
-	<h3> OR </h3> 
-	<input type="text" name="username1" placeholder="Enter Username" />
-	<input type="submit" name="submit" value="Create Username" />
-</div>
-</form>
+	<form action="UserServlet" method="get">
+		<div class="block">
+			<input type="text" name="existusername" placeholder="Enter Username" />
+			<input type="submit" name="submit" value="Book Reservation" /><br>
+			<h3> 
+				OR 
+			</h3> 
+			<input type="text" name="newusername" placeholder="Enter Username" />
+			<input type="submit" name="submit" value="Create Username" />
+		</div>
+	</form>
 </body>
 </html>

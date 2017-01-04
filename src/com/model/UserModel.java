@@ -100,7 +100,6 @@ public class UserModel {
 		Connection con = DBConnection.getConnection();
 		Statement stmt = con.createStatement();
 		String sql = "insert into UserName(username) values('"+username1+"') ";
-		System.out.println(sql);
 		stmt.executeUpdate(sql);
 	}
 	

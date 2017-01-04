@@ -27,7 +27,7 @@ public class UserServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String submit=request.getParameter("submit");
-		UserModel um = new UserModel();
+		UserModel callMethod = new UserModel();
 		if(submit.equalsIgnoreCase("Make Reservation")){
 			String firstname=request.getParameter("firstname");
 			String lastname=request.getParameter("lastname");
@@ -37,20 +37,20 @@ public class UserServlet extends HttpServlet {
 			String origin=request.getParameter("origin");
 			String destination=request.getParameter("destination");
 			
-			User u = new User();
-			u.setFirstname(firstname);
-			u.setLastname(lastname);
-			u.setCity(city);
-			u.setEmail(email);
-			u.setGender(gender);
-			u.setOrigin(origin);
-			u.setDestination(destination);
+			User uDetails = new User();
+			uDetails.setFirstname(firstname);
+			uDetails.setLastname(lastname);
+			uDetails.setCity(city);
+			uDetails.setEmail(email);
+			uDetails.setGender(gender);
+			uDetails.setOrigin(origin);
+			uDetails.setDestination(destination);
 			
 			try {
-				um.addUser(u);
-				String uName = um.getUserName();
+				callMethod.addUser(uDetails);
+				String uName = callMethod.getUserName();
 				request.setAttribute("userName",uName);
-				List<User> summary = um.getSummary();
+				List<User> summary = callMethod.getSummary();
 				request.setAttribute("summaryDetails", summary);
 				request.getRequestDispatcher("SummaryPage.jsp").forward(request, response);
 			} catch (ClassNotFoundException | SQLException e) {
@@ -60,12 +60,12 @@ public class UserServlet extends HttpServlet {
 		}
 		
 		if(submit.equalsIgnoreCase("Book Reservation")){
-			String username = request.getParameter("username");
+			String username = request.getParameter("existusername");
 			try {
-				String user = um.findUsername(username);
-				String uName = um.getUName(username);
+				String user = callMethod.findUsername(username);
+				String uName = callMethod.getUName(username);
 				request.setAttribute("username", uName);
-				List<String> list1 = um.dropdown();
+				List<String> list1 = callMethod.dropdown();
 				request.setAttribute("city", list1);
 				boolean done = username.equals(user);
 				if(done == true)
@@ -80,19 +80,14 @@ public class UserServlet extends HttpServlet {
 		}
 		
 		if(submit.equalsIgnoreCase("Create Username")){
-			String username1 = request.getParameter("username1");
-			System.out.println(username1);
+			String username1 = request.getParameter("newusername");
 			try {
-				um.addUsername(username1);
-				System.out.println(username1);
-//				String user = um.findUsername(username1);
-				String uName = um.getUName(username1);
+				callMethod.addUsername(username1);
+				String uName = callMethod.getUName(username1);
 				request.setAttribute("username", uName);
-				List<String> list1 = um.dropdown();
+				List<String> list1 = callMethod.dropdown();
 				request.setAttribute("city", list1);
-//				boolean done = username1.equals(user);
-//				if(done == true)
-					request.getRequestDispatcher("index.jsp").forward(request, response);
+				request.getRequestDispatcher("index.jsp").forward(request, response);
 			} catch (ClassNotFoundException | SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -105,17 +100,17 @@ public class UserServlet extends HttpServlet {
 			String email=request.getParameter("email");
 			String username=request.getParameter("username");
 			
-			User u1 = new User();
-			u1.setFirstname(firstname);
-			u1.setEmail(email);
-			u1.setLastname(lastname);
-			u1.setUsername(username);
+			User uDetails = new User();
+			uDetails.setFirstname(firstname);
+			uDetails.setEmail(email);
+			uDetails.setLastname(lastname);
+			uDetails.setUsername(username);
 			
 			try {
-				um.createUser(u1);
-				String uName = um.getUserName();
+				callMethod.createUser(uDetails);
+				String uName = callMethod.getUserName();
 				request.setAttribute("username", uName);
-				List<String> list1 = um.dropdown();
+				List<String> list1 = callMethod.dropdown();
 				request.setAttribute("city", list1);
 				request.getRequestDispatcher("index.jsp").forward(request, response);
 			} catch (ClassNotFoundException | SQLException e) {
