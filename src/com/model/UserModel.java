@@ -9,17 +9,14 @@ import com.db.DBConnection;
 
 public class UserModel {
 
-	 public static void addUser(User user) throws ClassNotFoundException, SQLException {
+	 public void addUser(User user) throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
-		
 		Connection con=DBConnection.getConnection();
 		Statement stmt=con.createStatement();
 		String sql="insert into user(firstname,lastname,email,gender,city,origin,destination) values('"+user.getFirstname()+"','"+user.getLastname()+"','"+user.getEmail()+"','"+user.getGender()+"','"+user.getCity()+"','"+user.getOrigin()+"','"+user.getDestination()+"')";
 		stmt.executeUpdate(sql);
-		
-		
 	}
-	 public static String getUserName() throws ClassNotFoundException, SQLException{
+	 public String getUserName() throws ClassNotFoundException, SQLException{
 		 Connection con=DBConnection.getConnection();
 		 Statement stmt=con.createStatement();
 		 String sql="select username from createuser where id =(select max(id) from createuser)";
@@ -29,7 +26,7 @@ public class UserModel {
 		 return username;
 	 }
 	 
-	 public static List<User> getSummary() throws ClassNotFoundException, SQLException{
+	 public List<User> getSummary() throws ClassNotFoundException, SQLException{
 		 Connection con = DBConnection.getConnection();
 		 Statement stmt = con.createStatement();
 		 String sql = "select * from user where Number =(select max(Number) from user)";
@@ -55,14 +52,12 @@ public class UserModel {
 			 user.setCity(city);
 			 user.setOrigin(origin);
 			 user.setDestination(destination);
-			 
 			 summary.add(user);
 		 }
 		 return summary;
 	 }
 	
-	public static List<String> dropdown () throws ClassNotFoundException, SQLException {
-			
+	public List<String> dropdown () throws ClassNotFoundException, SQLException {
 			Connection con=DBConnection.getConnection();
 			Statement stmt=con.createStatement();
 			String sql="select * from city";
@@ -75,31 +70,44 @@ public class UserModel {
 			return list;
 		}
 
-	public static void createUser(User u1) throws ClassNotFoundException, SQLException {
+	public void createUser(User u1) throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
 		Connection con = DBConnection.getConnection();
 		Statement stmt = con.createStatement();
 		String sql = "insert into createuser(username,firstname,lastname,email) values('"+u1.getUsername()+"','"+u1.getFirstname()+"','"+u1.getLastname()+"','"+u1.getEmail()+"') ";
 		stmt.executeUpdate(sql);
 	}
-	public static void addUserName(User us) throws ClassNotFoundException, SQLException {
-		// TODO Auto-generated method stub
-		Connection con = DBConnection.getConnection();
-		Statement stmt = con.createStatement();
-		String sql = "insert into UserName(username) values('"+us.getUsername()+"') ";
-		stmt.executeUpdate(sql);
-	}
-	public static String findUsername(String username) throws ClassNotFoundException, SQLException {
+	
+	public String findUsername(String username) throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
 		 Connection con=DBConnection.getConnection();
 		 Statement stmt=con.createStatement();
 		 String sql="select * from UserName where username = '"+username+"'";
 		 ResultSet rs=stmt.executeQuery(sql);
-		 rs.next();
-		 String username1 = rs.getString(2);
+		 String username1 = null;
+		 while(rs.next()){
+			 username1 = rs.getString(2);
+		 }
 		 return username1;
-		
 	}
 	
-	
+	public void addUsername(User us) throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		Connection con = DBConnection.getConnection();
+		Statement stmt = con.createStatement();
+		String sql = "insert into username(username) values('"+us.getUsername1()+"') ";
+		stmt.executeUpdate(sql);
+	}
+	public String getUName(String username) throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		 Connection con=DBConnection.getConnection();
+		 Statement stmt=con.createStatement();
+		 String sql="select * from UserName where username = '"+username+"'";
+		 ResultSet rs=stmt.executeQuery(sql);
+		 String username1 = null;
+		 while(rs.next()){
+			 username1 = rs.getString(2);
+		 }
+		 return username1;
+	}
 }

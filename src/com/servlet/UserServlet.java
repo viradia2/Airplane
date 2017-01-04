@@ -16,17 +16,18 @@ import com.bean.User;
 import com.model.UserModel;
 
 
+
 @WebServlet("/UserServlet")
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
    
-
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String submit=request.getParameter("submit");
+		UserModel um = new UserModel();
 		if(submit.equalsIgnoreCase("Make Reservation")){
 			String firstname=request.getParameter("firstname");
 			String lastname=request.getParameter("lastname");
@@ -46,11 +47,10 @@ public class UserServlet extends HttpServlet {
 			u.setDestination(destination);
 			
 			try {
-				// procc
-				UserModel.addUser(u);
-				String uName = UserModel.getUserName();
+				um.addUser(u);
+				String uName = um.getUserName();
 				request.setAttribute("userName",uName);
-				List<User> summary = UserModel.getSummary();
+				List<User> summary = um.getSummary();
 				request.setAttribute("summaryDetails", summary);
 				request.getRequestDispatcher("SummaryPage.jsp").forward(request, response);
 			} catch (ClassNotFoundException | SQLException e) {
@@ -61,31 +61,37 @@ public class UserServlet extends HttpServlet {
 		
 		if(submit.equalsIgnoreCase("Book Reservation")){
 			String username = request.getParameter("username");
-			System.out.println(username);
-			
 			try {
-//				UserModel.addUserName(us);
-				String user = UserModel.findUsername(username);
-				String uName = UserModel.getUserName();
+				String user = um.findUsername(username);
+				String uName = um.getUName(username);
 				request.setAttribute("username", uName);
-				List<String> list1 = UserModel.dropdown();
+				List<String> list1 = um.dropdown();
 				request.setAttribute("city", list1);
-				System.out.println(user);
 				boolean done = username.equals(user);
-				if(true){
-					System.out.println("vivek");
+				if(done == true)
 					request.getRequestDispatcher("index.jsp").forward(request, response);
-				}
-				else{
+				else
 					response.sendRedirect("LogIn.jsp");
-				}
+				
 			} catch (ClassNotFoundException | SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
 		}
-			
+		
+		if(submit.equalsIgnoreCase("Create Username")){
+			String username1 = request.getParameter("username1");
+			System.out.println(username1);
+			User us = new User();
+			us.setUsername1(username1);
+			try {
+				um.addUsername(us);
+				response.sendRedirect("index.jsp");
+			} catch (ClassNotFoundException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
 		if(submit.equalsIgnoreCase("Create User")){
 			String firstname=request.getParameter("firstname");
@@ -100,10 +106,10 @@ public class UserServlet extends HttpServlet {
 			u1.setUsername(username);
 			
 			try {
-				UserModel.createUser(u1);
-				String uName = UserModel.getUserName();
+				um.createUser(u1);
+				String uName = um.getUserName();
 				request.setAttribute("username", uName);
-				List<String> list1 = UserModel.dropdown();
+				List<String> list1 = um.dropdown();
 				request.setAttribute("city", list1);
 				request.getRequestDispatcher("index.jsp").forward(request, response);
 			} catch (ClassNotFoundException | SQLException e) {

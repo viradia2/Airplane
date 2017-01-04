@@ -55,7 +55,6 @@
 </title>
 </head>
 <body style="background-color:white;">
-
 <%Object userName = request.getAttribute("username");%>
 
 <header>

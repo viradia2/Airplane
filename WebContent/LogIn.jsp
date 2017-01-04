@@ -25,7 +25,7 @@
 	<input type="text" name="username" placeholder="Enter Username" />
 	<input type="submit" name="submit" value="Book Reservation" /><br>
 	<h3> OR </h3> 
-	<input type="text" name="userName" placeholder="Enter Username" />
+	<input type="text" name="username1" placeholder="Enter Username" />
 	<input type="submit" name="submit" value="Create Username" />
 </div>
 </form>

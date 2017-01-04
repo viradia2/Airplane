@@ -3,9 +3,14 @@ package com.bean;
 public class User {
 	
 	int id;
-	String username,password,email,firstname,lastname,city,gender,country,origin,destination;
+	String username,password,email,firstname,lastname,city,gender,country,origin,destination,username1;
 
-
+	public String getUsername1() {
+		return username1;
+	}
+	public void setUsername1(String username1) {
+		this.username1 = username1;
+	}
 	public String getOrigin() {
 		return origin;
 	}
