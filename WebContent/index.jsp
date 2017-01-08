@@ -12,51 +12,15 @@
 <%@ page import="java.util.*" %>
 <html>
 <head>
-<style>
-	div.container{
-		width: 100%;
-		border: 1px solid gray;
-	
-	}
-	
-	header {
-	    padding: 20px;
-	    color: Green;
-	    background-color: white;
-	    clear: left;
-	}
-	
-	ul.menu{
-	    list-style-type: none;
-	    margin: 0;
-	    padding: 0;
-	    overflow: hidden;
-	    background-color: lightgrey;
-		color: Black;
-	
-	}
-	li{
-		float:left;
-	}
-	div.Bright{
-		text-align: right;
-	}
-	li a {
-	    display: block;
-	    color: black;
-	    text-align: center;
-	    padding: 16px;
-	    text-decoration: none;
-	}
-</style>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>
-	Ticket Reservation
-</title>
+	<link href="index.css" rel="stylesheet" type="text/css">
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<title>
+		Ticket Reservation
+	</title>
 </head>
 <body style="background-color:white;">
 	<%Object userName = request.getAttribute("username");%>
-	
+	<%session.setAttribute("username", userName); %>
 	<header>
 		<img alt="Student Universe" src="C:\Users\vvviradia\Desktop\images.jpg" style="width:50px;height:50px;">
 		<font color="green" size="10">
@@ -73,7 +37,7 @@
 	  	<a href="#flight">Flight</a>
 	  </li>
 	  <li>
-	  	<a href="#news">Hotels</a>
+	  	<a href="history.jsp" name="History" type="submit">History</a>
 	  </li>
 	  <li>
 	  	<a href="#contact">Tour</a>

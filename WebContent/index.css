@@ -1,0 +1,36 @@
+@CHARSET "ISO-8859-1";
+div.container{
+		width: 100%;
+		border: 1px solid gray;
+	
+	}
+	
+	header {
+	    padding: 20px;
+	    color: Green;
+	    background-color: white;
+	    clear: left;
+	}
+	
+	ul.menu{
+	    list-style-type: none;
+	    margin: 0;
+	    padding: 0;
+	    overflow: hidden;
+	    background-color: lightgrey;
+		color: Black;
+	
+	}
+	li{
+		float:left;
+	}
+	div.Bright{
+		text-align: right;
+	}
+	li a {
+	    display: block;
+	    color: black;
+	    text-align: center;
+	    padding: 16px;
+	    text-decoration: none;
+	}

@@ -17,7 +17,7 @@ public class UserModel {
 		// TODO Auto-generated method stub
 		Connection con=DBConnection.getConnection();
 		Statement stmt=con.createStatement();
-		String sql="insert into user(firstname,lastname,email,gender,city,origin,destination) values('"+user.getFirstname()+"','"+user.getLastname()+"','"+user.getEmail()+"','"+user.getGender()+"','"+user.getCity()+"','"+user.getOrigin()+"','"+user.getDestination()+"')";
+		String sql="insert into user(firstname,lastname,email,gender,city,origin,destination,username) values('"+user.getFirstname()+"','"+user.getLastname()+"','"+user.getEmail()+"','"+user.getGender()+"','"+user.getCity()+"','"+user.getOrigin()+"','"+user.getDestination()+"','"+user.getUsername()+"')";
 		stmt.executeUpdate(sql);
 	}
 	 public String getUserName() throws ClassNotFoundException, SQLException{
