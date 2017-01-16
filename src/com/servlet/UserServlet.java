@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.bean.User;
 import com.model.UserModel;
@@ -24,6 +25,8 @@ public class UserServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String submit=request.getParameter("submit");
+		String checkN = checkingnull(submit);
+		request.setAttribute("submit", checkN);
 		
 		if(submit.equalsIgnoreCase("Make Reservation")){
 			User signupUser = getUserFromPage(request);
@@ -36,8 +39,17 @@ public class UserServlet extends HttpServlet {
 			}
 		}
 		
-		if(submit.equalsIgnoreCase("History")){
-			
+		if(submit.equalsIgnoreCase("Search")){
+			String uN = request.getParameter("search");
+			System.out.println(uN);
+			try {
+				List<User> historyList = callMethod.findHistory(uN);
+				System.out.println(historyList);
+				request.setAttribute("HistoryList", historyList);
+				forwardPage("history.jsp", request, response);
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		if(submit.equalsIgnoreCase("Book Reservation")){
@@ -52,10 +64,18 @@ public class UserServlet extends HttpServlet {
 		
 		if(submit.equalsIgnoreCase("Create Username")){
 			String username1 = request.getParameter("newusername");
+			
 			try {
-				callMethod.addUsername(username1);
-				request = setPForcreateUsername(username1,request);
-				forwardPage("index.jsp", request, response);
+				if(username1.matches("^[a-zA-Z]+$")){
+					request = setPForcreateUsername(username1, request);
+					forwardPage("index.jsp", request, response);
+				}else{
+					String error="*Username only contains letters";
+					request.setAttribute("error", error);
+					forwardPage("LogIn.jsp", request, response);
+				}
+				
+				
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			}
@@ -71,6 +91,13 @@ public class UserServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	private String checkingnull(String submit) {
+		if(submit != null){
+			return submit;
+		}
+		return null;
 	}
 
 	private HttpServletRequest setPForExistUsername(String username, HttpServletRequest request) throws ClassNotFoundException, SQLException {
@@ -106,6 +133,11 @@ public class UserServlet extends HttpServlet {
 		}
 		else if(string == "index.jsp"){
 			request.getRequestDispatcher("index.jsp").forward(request, response);
+		}else if(string == "history.jsp"){
+			request.getRequestDispatcher("history.jsp").forward(request, response);
+		}
+		else if(string == "LogIn.jsp") {
+			request.getRequestDispatcher("LogIn.jsp").forward(request, response);
 		}
 	}
 
@@ -117,7 +149,8 @@ public class UserServlet extends HttpServlet {
 		String city=request.getParameter("city");
 		String origin=request.getParameter("origin");
 		String destination=request.getParameter("destination");
-		String username=request.getParameter("username");
+		HttpSession session = request.getSession();
+		String uN = session.getAttribute("username").toString();
 		
 		User user = new User();
 		user.setFirstname(firstname);
@@ -127,7 +160,7 @@ public class UserServlet extends HttpServlet {
 		user.setGender(gender);
 		user.setOrigin(origin);
 		user.setDestination(destination);
-		user.setUsername(username);
+		user.setUsername(uN);
 		return user;
 	}
 }

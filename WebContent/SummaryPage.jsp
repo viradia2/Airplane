@@ -11,12 +11,10 @@
 		<title>Insert title here</title>
 	</head>
 	<body style="background-color:lightgrey;">
-	
 		<%Object uN = session.getAttribute("username"); %>
 		<center>
 			<h2>Summary Of Flight Details</h2>
 		</center>
-		
 		You are signed in as  <%=uN %> <br>
 		<% List<User> sDetails = (ArrayList<User>)request.getAttribute("summaryDetails"); %>
 		Your Flight Details:<br>

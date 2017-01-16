@@ -7,9 +7,10 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>
 			Insert title here
-	</title>
+		</title>
 	</head>
 	<body>
+		<%Object checkN = request.getAttribute("submit"); %>
 		<form action="UserServlet" method="get">
 			<div class="block">
 				<input type="text" name="existusername" placeholder="Enter Username" />
@@ -20,6 +21,12 @@
 				<input type="text" name="newusername" placeholder="Enter Username" />
 				<input type="submit" name="submit" value="Create Username" />
 			</div>
+			<% if(checkN != null){ %>
+				<%String message = request.getAttribute("error").toString(); %>
+				<font color="red">
+					<%=message %>
+				</font>
+			<% } %>
 		</form>
 	</body>
 </html>

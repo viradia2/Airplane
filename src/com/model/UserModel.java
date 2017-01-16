@@ -14,7 +14,6 @@ import com.servlet.*;
 public class UserModel {
 
 	 public void addUser(User user) throws ClassNotFoundException, SQLException {
-		// TODO Auto-generated method stub
 		Connection con=DBConnection.getConnection();
 		Statement stmt=con.createStatement();
 		String sql="insert into user(firstname,lastname,email,gender,city,origin,destination,username) values('"+user.getFirstname()+"','"+user.getLastname()+"','"+user.getEmail()+"','"+user.getGender()+"','"+user.getCity()+"','"+user.getOrigin()+"','"+user.getDestination()+"','"+user.getUsername()+"')";
@@ -75,7 +74,6 @@ public class UserModel {
 		}
 
 	public void createUser(User u1) throws ClassNotFoundException, SQLException {
-		// TODO Auto-generated method stub
 		Connection con = DBConnection.getConnection();
 		Statement stmt = con.createStatement();
 		String sql = "insert into createuser(username,firstname,lastname,email) values('"+u1.getUsername()+"','"+u1.getFirstname()+"','"+u1.getLastname()+"','"+u1.getEmail()+"') ";
@@ -83,7 +81,6 @@ public class UserModel {
 	}
 	
 	public String findUsername(String username) throws ClassNotFoundException, SQLException {
-		// TODO Auto-generated method stub
 		 Connection con=DBConnection.getConnection();
 		 Statement stmt=con.createStatement();
 		 String sql="select * from UserName where username = '"+username+"'";
@@ -96,7 +93,6 @@ public class UserModel {
 	}
 	
 	public void addUsername(String username1) throws ClassNotFoundException, SQLException {
-		// TODO Auto-generated method stub
 		Connection con = DBConnection.getConnection();
 		Statement stmt = con.createStatement();
 		String sql = "insert into UserName(username) values('"+username1+"') ";
@@ -104,7 +100,6 @@ public class UserModel {
 	}
 	
 	public String getUName(String username) throws ClassNotFoundException, SQLException {
-		// TODO Auto-generated method stub
 		 Connection con=DBConnection.getConnection();
 		 Statement stmt=con.createStatement();
 		 String sql="select * from UserName where username = '"+username+"'";
@@ -114,5 +109,38 @@ public class UserModel {
 			 username1 = rs.getString(2);
 		 }
 		 return username1;
+	}
+	public List<User> findHistory(String uN) throws ClassNotFoundException, SQLException {
+		 Connection con=DBConnection.getConnection();
+		 Statement stmt=con.createStatement();
+		 String sql="select * from user where username = '"+uN+"'";
+		 ResultSet rs=stmt.executeQuery(sql);
+		 List<User> hList = new ArrayList<>();
+		 while(rs.next()){
+			 int Number = rs.getInt(1);
+			 String firstname = rs.getString(2);
+			 String lastname = rs.getString(3);
+			 String email = rs.getString(4);
+			 String gender = rs.getString(5);
+			 String city = rs.getString(6);
+			 String origin = rs.getString(7);
+			 String destination = rs.getString(8);
+			 String username = rs.getString(9);
+			 
+			 User user = new User();
+			 user.setId(Number);
+			 user.setFirstname(firstname);
+			 user.setLastname(lastname);
+			 user.setEmail(email);
+			 user.setGender(gender);
+			 user.setCity(city);
+			 user.setOrigin(origin);
+			 user.setDestination(destination);
+			 user.setUsername(username);
+			 
+			 hList.add(user);
+		 }
+		 System.out.println(hList);
+		 return hList;
 	}
 }
